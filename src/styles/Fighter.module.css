@@ -5,7 +5,7 @@
 }
 
 .name {
-  font-size: 4rem;
+  font-size: 5rem;
   font-weight: bold;
   align-self: center;
   padding: 0 2rem;
@@ -113,7 +113,7 @@
 }
 
 .score {
-  font-size: 12rem;
+  font-size: 16rem;
   font-weight: bold;
   padding: 0 2rem;
   margin: auto;
