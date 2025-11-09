@@ -65,19 +65,23 @@ export const useTimerStore = create<TimerState>()(
       tick: () =>
         set((s) => {
           if (!s.isRunning) return s;
+
           const now = Date.now();
-          const elapsed = Math.floor((now - s.lastUpdated) / 1000); // seg reales transcurridos
-          if (elapsed <= 0) {
-            // evita doble decremento si llega otro tick dentro del mismo segundo
-            return { ...s, lastUpdated: now };
-          }
-          const nextRemaining = Math.max(0, s.remaining - elapsed);
+          const elapsedMs = now - s.lastUpdated;
+
+          // Si no alcanzó 1 segundo, no toques lastUpdated.
+          if (elapsedMs < 1000) return s;
+
+          const steps = Math.floor(elapsedMs / 1000); // segundos completos
+          const nextRemaining = Math.max(0, s.remaining - steps);
+
           return {
             ...s,
             remaining: nextRemaining,
             isRunning: nextRemaining > 0 && s.isRunning,
-            lastUpdated: now,
-            _from: INSTANCE_ID,
+            // Avanza lastUpdated por múltiplos exactos de 1s para conservar la "fracción" restante.
+            lastUpdated: s.lastUpdated + steps * 1000,
+            _from: s._from, // si usas INSTANCE_ID, mantenlo
           };
         }),
 

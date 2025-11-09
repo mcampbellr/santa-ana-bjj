@@ -11,6 +11,12 @@ export default function Control() {
   const isRunning = useTimerStore((s) => s.isRunning);
   const [minutes, setMinutes] = useState(5);
 
+  const handleReset = () => {
+    if (confirm("¿Seguro que quieres reiniciar el temporizador?")) {
+      reset();
+    }
+  };
+
   return (
     <div className={styles.timerControl}>
       <Timer />
@@ -28,7 +34,7 @@ export default function Control() {
       >
         <FaPause />
       </button>
-      <button className={styles.resetButton} onClick={() => reset()}>
+      <button className={styles.resetButton} onClick={handleReset}>
         <FaRedo />
       </button>
 
