@@ -14,6 +14,24 @@ export default function Control() {
   return (
     <div className={styles.timerControl}>
       <Timer />
+      <button
+        className={styles.startButton}
+        onClick={() => start()}
+        disabled={isRunning}
+      >
+        <FaPlay />
+      </button>
+      <button
+        className={styles.stopButton}
+        onClick={() => stop()}
+        disabled={!isRunning}
+      >
+        <FaPause />
+      </button>
+      <button className={styles.resetButton} onClick={() => reset()}>
+        <FaRedo />
+      </button>
+
       {!isRunning && (
         <div>
           <label>
@@ -37,23 +55,6 @@ export default function Control() {
           </button>
         </div>
       )}
-      <button
-        className={styles.startButton}
-        onClick={() => start()}
-        disabled={isRunning}
-      >
-        <FaPlay />
-      </button>
-      <button
-        className={styles.stopButton}
-        onClick={() => stop()}
-        disabled={!isRunning}
-      >
-        <FaPause />
-      </button>
-      <button className={styles.resetButton} onClick={() => reset()}>
-        <FaRedo />
-      </button>
     </div>
   );
 }

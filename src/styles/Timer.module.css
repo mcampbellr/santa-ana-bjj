@@ -3,14 +3,13 @@
   font-weight: bold;
 }
 
-.timerControl{
+.timerControl {
   display: flex;
   justify-content: center;
   gap: 2rem;
   justify-items: center;
   align-items: center;
 }
-
 
 .startButton {
   font-weight: bold;
