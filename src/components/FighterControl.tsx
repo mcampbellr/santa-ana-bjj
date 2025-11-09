@@ -21,7 +21,7 @@ export default function Fighter({ fighterId }: Props) {
   const removeAdvantage = useAppStore((s) => s.removeAdvantage);
 
   const points = [
-    { label: "Derribo", value: 2 },
+    { label: "Derrivo", value: 2 },
     { label: "Pasada Guardia", value: 3 },
     { label: "Montada o Espalda", value: 4 },
   ];
