@@ -1,0 +1,28 @@
+name: Deploy Web to Heroku
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: produ
+    env:
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Deploy Web
+        uses: ./.github/actions/deploy-heroku
+        with:
+          dockerfile: ./Dockerfile
+          heroku_app: ${{ vars.HEROKU_APP_WEB }}

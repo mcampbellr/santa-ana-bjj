@@ -1,0 +1,52 @@
+name: Deploy to Heroku
+description: Builds and deploys a Docker image to Heroku
+
+inputs:
+  dockerfile:
+    description: Path to Dockerfile
+    required: true
+  heroku_app:
+    description: Heroku app name
+    required: true
+  process_type:
+    description: Heroku process type (e.g., web, worker)
+    required: false
+    default: web
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Instalar Heroku CLI
+      run: curl https://cli-assets.heroku.com/install.sh | sh
+      shell: bash
+
+    - name: Docker login
+      env:
+        HEROKU_API_KEY: ${{ env.HEROKU_API_KEY }}
+      run: |
+        echo "$HEROKU_API_KEY" | docker login --username=_ --password-stdin registry.heroku.com
+      shell: bash
+
+    - name: Docker build con envs
+      run: |
+        BUILD_ARGS=""
+        while IFS='=' read -r NAME VALUE; do
+          if [[ "$NAME" != "HEROKU_API_KEY" && "$NAME" != "GITHUB_TOKEN" ]]; then
+            ESCAPED_VALUE=$(printf '%q' "$VALUE")
+            BUILD_ARGS="$BUILD_ARGS --build-arg $NAME=$ESCAPED_VALUE"
+          fi
+        done < <(env)
+
+        echo "Build args: $BUILD_ARGS"
+        eval docker build $BUILD_ARGS -f ${{ inputs.dockerfile }} -t registry.heroku.com/${{ inputs.heroku_app }}/${{ inputs.process_type }} .
+      shell: bash
+
+    - name: Docker push
+      run: |
+        docker push registry.heroku.com/${{ inputs.heroku_app }}/${{ inputs.process_type }}
+      shell: bash
+
+    - name: Heroku release
+      run: |
+        heroku container:release ${{ inputs.process_type }} --app ${{ inputs.heroku_app }}
+      shell: bash

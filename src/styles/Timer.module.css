@@ -1,0 +1,64 @@
+.timer {
+  font-size: 10rem;
+  font-weight: bold;
+}
+
+.timerControl{
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  justify-items: center;
+  align-items: center;
+}
+
+
+.startButton {
+  font-weight: bold;
+  display: flex;
+  padding: 1rem 2rem;
+  appearance: none;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  background-color: green;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s;
+}
+
+.stopButton {
+  font-weight: bold;
+  display: flex;
+  padding: 1rem 2rem;
+  appearance: none;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  background-color: red;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s;
+}
+
+.resetButton {
+  font-weight: bold;
+  display: flex;
+  padding: 1rem 2rem;
+  appearance: none;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  background-color: orange;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s;
+}
